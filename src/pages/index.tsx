@@ -282,7 +282,7 @@ export default function Home() {
                 target="_blank"
                 className="underline"
               >
-                JavaScript, Node.Js, and React
+                JavaScript, Node.Js, Angular and React
               </Link>{" "}
               with experience building scalable web applications, APIs, and AI-enabled systems using JavaScript, React, Angular, and Node.js. I have worked as a Frontend Software Engineer Intern at Superstars and Y STEM and Chess Inc., where I built modular UIs and optimized client-side performance by up to 40%. My projects include TrueFeed, an AI-powered content credibility platform, an Online Resume-Based Job Platform, and SightScan, an assistive AI system achieving 95% accuracy and improving user mobility by 40%. I am AWS Certified Cloud Practitioner (CLF-C02) and passionate about building reliable, user-centric solutions.
             </h2>
