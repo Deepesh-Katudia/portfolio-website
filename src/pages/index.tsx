@@ -28,13 +28,19 @@ import VanillaTilt from "vanilla-tilt";
 import { motion } from "framer-motion";
 
 const aboutStats = [
-  { label: "Months of experience", value: "6" },
-  { label: "Technologies mastered", value: "5+" },
-  { label: "Companies worked with", value: "2" },
+  { label: "Months of experience", value: "18" },
+  { label: "Technologies mastered", value: "20+" },
+  { label: "Companies worked with", value: "3" },
 ];
 
 const projects = [
   
+   {
+    title: "TrueFeed",
+    description: "TrueFeed is an AI-powered content credibility platform that analyzes posts at creation time, assigns credibility tags and summaries within 30–60 seconds, and persists results to deliver reliable, performance-optimized content feeds.",
+    image: "/assets/truefeed.png",
+    href: "https://github.com/Deepesh-Katudia/truefeed-frontend",
+  },
   {
     title: "SightScan",
     description: "SightScan: Empowering the Visually Impaired People.",
@@ -45,19 +51,19 @@ const projects = [
     title: "Portfolio-Website",
     description: "Developed an Portfolio Website for Software Developer",
     image: "/assets/portfolio.webm",
-    href: "https://translatebot.app/",
+    href: "https://github.com/Deepesh-Katudia/portfolio-website",
   },
   {
-    title: "Fast-n-Fitness Master",
-    description: "An Application on Gym, which tracks your daily exercices",
-    image: "/assets/fnf.png",
-    href: "https://github.com/codewithdeepesh29/Indian_Currency_API",
+    title: "Online Job Platform",
+    description: "An online job platform that enables users to browse and apply for jobs, manage profiles, and supports secure authentication with optimized performance using modern web technologies.",
+    image: "/assets/download.png",
+    href: "https://github.com/Deepesh-Katudia/Online-Job-Platform",
   },
   {
-    title: "Resume Based Job Platform",
-    description: "The job searching using your Resume.",
+    title: "CodeMentor AI",
+    description: "An AI-powered coding assistant that analyzes code, provides contextual feedback, and helps users understand and improve programming solutions.",
     image: "/assets/resume.webm",
-    href: "https://github.com/codewithdeepesh29/Resume_Based_Job_Platform",
+    href: "https://github.com/Deepesh-Katudia/CodeMentor_AI",
   },
 ];
 
@@ -189,6 +195,7 @@ export default function Home() {
               <span className={styles.pill}>JavaScript</span>
               <span className={styles.pill}>TypeScript</span>
               <span className={styles.pill}>React</span>
+              <span className={styles.pill}>Angular</span>
             </div>
             <div>
               <h1
@@ -211,8 +218,7 @@ export default function Home() {
                 data-scroll-speed=".06"
                 className="mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl"
               >
-                An full-stack website developer with a passion for
-                crafting unique digital experiences.
+               A Software Engineer building full-stack and AI-driven applications, with experience delivering scalable web systems and performance-focused solutions using modern technologies.
               </p>
             </div>
             <span
@@ -278,11 +284,7 @@ export default function Home() {
               >
                 JavaScript, Node.Js, and React
               </Link>{" "}
-              with a strong foundation in C/C++, Python, JavaScript, React, and SQL. Experienced in 
-              web development, API integration, and machine learning through impactful internships and projects like an 
-              Resume Based Job platform and SightScan: Empowering the visually Impaired People !!! for accessibility. Proven 
-              ability to write efficient, clean code  and collaborate in cross-functional teams to deliver innovative and 
-              user-centric solutions. Passionate about leveraging technology to solve real-world problems..
+              with experience building scalable web applications, APIs, and AI-enabled systems using JavaScript, React, Angular, and Node.js. I have worked as a Frontend Software Engineer Intern at Superstars and Y STEM and Chess Inc., where I built modular UIs and optimized client-side performance by up to 40%. My projects include TrueFeed, an AI-powered content credibility platform, an Online Resume-Based Job Platform, and SightScan, an assistive AI system achieving 95% accuracy and improving user mobility by 40%. I am AWS Certified Cloud Practitioner (CLF-C02) and passionate about building reliable, user-centric solutions.
             </h2>
             <div className="grid grid-cols-2 gap-8 xl:grid-cols-3">
               {aboutStats.map((stat) => (
@@ -408,10 +410,6 @@ export default function Home() {
                     I got you.
                   </span>
                 </h2>
-                <p className="mt-2 tracking-tighter text-secondary-foreground">
-                  Here are some of the services I offer. If you have any
-                  questions, feel free to reach out.
-                </p>
               </div>
               {services.map((service) => (
                 <div
@@ -444,8 +442,7 @@ export default function Home() {
               <span className="text-gradient clash-grotesk">together.</span>
             </h2>
             <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;m currently available for freelance work and open to
-              discussing new projects.
+              I&apos;m currently looking for full-time opportunities as a Software Engineer. If you have a project in mind or just want to say hi, feel free to reach out!
             </p>
             <Link href="mailto:dk72660n@pace.edu" passHref>
               <Button className="mt-6">Get in touch</Button>
