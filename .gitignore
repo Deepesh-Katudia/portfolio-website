@@ -3,3 +3,5 @@ node_modules
 out
 .env
 .next
+node_modules
+.next
