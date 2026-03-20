@@ -36,10 +36,17 @@ const aboutStats = [
 
 const projects = [
   {
+  title: "MCP Atlas",
+  description:
+    "MCP Atlas is an observability dashboard for multi-MCP systems that records live request flows, reconstructs traces, tracks latency and service health, builds dependency graphs, and surfaces anomalies across local services and Blaxel integrations.",
+  image: "/assets/mcp-atlas.png",
+  href: "https://github.com/Deepesh-Katudia/mcp-atlas",
+},
+  {
     title: "TrueFeed",
     description:
       "TrueFeed is an AI-powered content credibility platform that analyzes posts at creation time, assigns credibility tags and summaries within 30–60 seconds, and persists results to deliver reliable, performance-optimized content feeds.",
-    image: "/assets/Truefeed.png",
+    image: "/assets/truefeed.png",
     href: "https://github.com/Deepesh-Katudia/truefeed-frontend",
   },
   {
@@ -120,13 +127,6 @@ export default function Home() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero-pill", {
-        y: 24,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.08,
-      });
 
       gsap.from(".hero-title", {
         y: 60,
@@ -308,13 +308,6 @@ gsap.from(".service-card", {
     });
   }, []);
 
-  const handleResumeDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/Deepesh Haresh Katudia.pdf";
-    link.download = "Deepesh_Katudia_Resume.pdf";
-    link.click();
-  };
-
   return (
     <Container>
       <div ref={pageRef}>
@@ -354,15 +347,20 @@ gsap.from(".service-card", {
             </div>
 
             <span className="hero-actions flex flex-row items-center space-x-1.5 pt-6">
-              <Link href="mailto:dk72660n@pace.edu" passHref>
+              <Link href="mailto:deepeshkatudia6201@gmail.com" passHref>
                 <Button>
                   Get in touch <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
 
-              <Button variant="outline" onClick={handleResumeDownload}>
-                Learn More
-              </Button>
+  <Link
+    href="https://github.com/Deepesh-Katudia"
+    target="_blank"
+    rel="noopener noreferrer"
+    passHref
+  >
+    <Button variant="outline">GitHub Profile</Button>
+  </Link>
             </span>
 
             <div
