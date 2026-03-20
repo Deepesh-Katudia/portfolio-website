@@ -13,7 +13,7 @@ import {
 import { TriangleDownIcon } from "@radix-ui/react-icons";
 import Spline from "@splinetool/react-spline";
 import Link from "next/link";
-import { cn, scrollTo } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -25,7 +25,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import VanillaTilt from "vanilla-tilt";
-import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const aboutStats = [
   { label: "Months of experience", value: "18" },
@@ -34,11 +35,11 @@ const aboutStats = [
 ];
 
 const projects = [
-  
-   {
+  {
     title: "TrueFeed",
-    description: "TrueFeed is an AI-powered content credibility platform that analyzes posts at creation time, assigns credibility tags and summaries within 30–60 seconds, and persists results to deliver reliable, performance-optimized content feeds.",
-    image: "/assets/truefeed.png",
+    description:
+      "TrueFeed is an AI-powered content credibility platform that analyzes posts at creation time, assigns credibility tags and summaries within 30–60 seconds, and persists results to deliver reliable, performance-optimized content feeds.",
+    image: "/assets/Truefeed.png",
     href: "https://github.com/Deepesh-Katudia/truefeed-frontend",
   },
   {
@@ -49,19 +50,21 @@ const projects = [
   },
   {
     title: "Portfolio-Website",
-    description: "Developed an Portfolio Website for Software Developer",
+    description: "Developed a portfolio website for a software developer.",
     image: "/assets/portfolio.webm",
     href: "https://github.com/Deepesh-Katudia/portfolio-website",
   },
   {
     title: "Online Job Platform",
-    description: "An online job platform that enables users to browse and apply for jobs, manage profiles, and supports secure authentication with optimized performance using modern web technologies.",
+    description:
+      "An online job platform that enables users to browse and apply for jobs, manage profiles, and supports secure authentication with optimized performance using modern web technologies.",
     image: "/assets/download.png",
     href: "https://github.com/Deepesh-Katudia/Online-Job-Platform",
   },
   {
     title: "CodeMentor AI",
-    description: "An AI-powered coding assistant that analyzes code, provides contextual feedback, and helps users understand and improve programming solutions.",
+    description:
+      "An AI-powered coding assistant that analyzes code, provides contextual feedback, and helps users understand and improve programming solutions.",
     image: "/assets/resume.webm",
     href: "https://github.com/Deepesh-Katudia/CodeMentor_AI",
   },
@@ -101,48 +104,178 @@ const services = [
 ];
 
 export default function Home() {
-  const refScrollContainer = useRef(null);
+  const pageRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const aboutRef = useRef<HTMLElement | null>(null);
+  const projectsRef = useRef<HTMLElement | null>(null);
+  const servicesRef = useRef<HTMLElement | null>(null);
+  const contactRef = useRef<HTMLElement | null>(null);
+
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
 
-  // handle scroll
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-pill", {
+        y: 24,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.08,
+      });
+
+      gsap.from(".hero-title", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        delay: 0.15,
+        ease: "power4.out",
+      });
+
+      gsap.from(".hero-description", {
+        y: 28,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.3,
+        ease: "power3.out",
+      });
+
+      gsap.from(".hero-actions", {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.45,
+        ease: "power3.out",
+      });
+
+      gsap.to(".hero-canvas", {
+        yPercent: -10,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.from(".about-content", {
+        scrollTrigger: {
+          trigger: aboutRef.current,
+          start: "top 78%",
+        },
+        y: 70,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      gsap.from(".about-stat", {
+        scrollTrigger: {
+          trigger: aboutRef.current,
+          start: "top 72%",
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: "power3.out",
+      });
+
+      gsap.from(".projects-heading", {
+        scrollTrigger: {
+          trigger: projectsRef.current,
+          start: "top 80%",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+      gsap.from(".project-card", {
+        scrollTrigger: {
+          trigger: projectsRef.current,
+          start: "top 72%",
+        },
+        y: 80,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+gsap.from(".services-heading", {
+  scrollTrigger: {
+    trigger: servicesRef.current,
+    start: "top 80%",
+    toggleActions: "play none none none",
+  },
+  y: 40,
+  opacity: 0,
+  duration: 0.8,
+  ease: "power3.out",
+});
+
+gsap.from(".service-card", {
+  scrollTrigger: {
+    trigger: servicesRef.current,
+    start: "top 75%",
+    toggleActions: "play none none none",
+  },
+  y: 50,
+  opacity: 0,
+  stagger: 0.12,
+  duration: 0.8,
+  ease: "power3.out",
+  clearProps: "all",
+});
+
+      gsap.from(".contact-box", {
+        scrollTrigger: {
+          trigger: contactRef.current,
+          start: "top 80%",
+        },
+        scale: 0.96,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   useEffect(() => {
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
 
-    async function getLocomotive() {
-      const Locomotive = (await import("locomotive-scroll")).default;
-      new Locomotive({
-        el: refScrollContainer.current ?? new HTMLElement(),
-        smooth: true,
-      });
-    }
-
     function handleScroll() {
-      let current = "";
+      let currentSection = "";
       setIsScrolled(window.scrollY > 0);
 
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
         if (window.scrollY >= sectionTop - 250) {
-          current = section.getAttribute("id") ?? "";
+          currentSection = section.getAttribute("id") ?? "";
         }
       });
 
       navLinks.forEach((li) => {
         li.classList.remove("nav-active");
 
-        if (li.getAttribute("href") === `#${current}`) {
+        if (li.getAttribute("href") === `#${currentSection}`) {
           li.classList.add("nav-active");
-          console.log(li.getAttribute("href"));
         }
       });
     }
 
-    void getLocomotive();
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -160,50 +293,50 @@ export default function Home() {
     });
   }, [carouselApi]);
 
-  // card hover effect
   useEffect(() => {
-    const tilt: HTMLElement[] = Array.from(document.querySelectorAll("#tilt"));
+    const tilt: HTMLElement[] = Array.from(
+      document.querySelectorAll("[data-tilt-card]"),
+    );
+
     VanillaTilt.init(tilt, {
       speed: 300,
       glare: true,
       "max-glare": 0.1,
       gyroscope: true,
       perspective: 900,
-      scale: 0.9,
+      scale: 0.98,
     });
   }, []);
 
+  const handleResumeDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/Deepesh Haresh Katudia.pdf";
+    link.download = "Deepesh_Katudia_Resume.pdf";
+    link.click();
+  };
+
   return (
     <Container>
-      <div ref={refScrollContainer}>
+      <div ref={pageRef}>
         <Gradient />
 
         {/* Intro */}
         <section
           id="home"
-          data-scroll-section
+          ref={heroRef}
           className="mt-40 flex w-full flex-col items-center xl:mt-0 xl:min-h-screen xl:flex-row xl:justify-between"
         >
           <div className={styles.intro}>
-            <div
-              data-scroll
-              data-scroll-direction="horizontal"
-              data-scroll-speed=".09"
-              className="flex flex-row items-center space-x-1.5"
-            >
-              <span className={styles.pill}>node.js</span>
-              <span className={styles.pill}>JavaScript</span>
-              <span className={styles.pill}>TypeScript</span>
-              <span className={styles.pill}>React</span>
-              <span className={styles.pill}>Angular</span>
+            <div className="flex flex-row items-center space-x-1.5">
+              <span className={`${styles.pill} hero-pill`}>node.js</span>
+              <span className={`${styles.pill} hero-pill`}>JavaScript</span>
+              <span className={`${styles.pill} hero-pill`}>TypeScript</span>
+              <span className={`${styles.pill} hero-pill`}>React</span>
+              <span className={`${styles.pill} hero-pill`}>Angular</span>
             </div>
+
             <div>
-              <h1
-                data-scroll
-                data-scroll-enable-touch-speed
-                data-scroll-speed=".06"
-                data-scroll-direction="horizontal"
-              >
+              <h1 className="hero-title">
                 <span className="text-6xl tracking-tighter text-foreground 2xl:text-8xl">
                   Hello, I&apos;m
                   <br />
@@ -212,37 +345,24 @@ export default function Home() {
                   Deepesh Katudia.
                 </span>
               </h1>
-              <p
-                data-scroll
-                data-scroll-enable-touch-speed
-                data-scroll-speed=".06"
-                className="mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl"
-              >
-               A Software Engineer building full-stack and AI-driven applications, with experience delivering scalable web systems and performance-focused solutions using modern technologies.
+
+              <p className="hero-description mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl">
+                A Software Engineer building full-stack and AI-driven
+                applications, with experience delivering scalable web systems
+                and performance-focused solutions using modern technologies.
               </p>
             </div>
-            <span
-              data-scroll
-              data-scroll-enable-touch-speed
-              data-scroll-speed=".06"
-              className="flex flex-row items-center space-x-1.5 pt-6"
-            >
+
+            <span className="hero-actions flex flex-row items-center space-x-1.5 pt-6">
               <Link href="mailto:dk72660n@pace.edu" passHref>
                 <Button>
                   Get in touch <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
-            <Button
-              variant="outline"
-              onClick={() => {
-              const link = document.createElement("a");
-              link.href = "/developer-portfolio/public/Deepesh_Haresh_Katudia.pdf"; // Replace with your actual PDF file path
-              link.download = "Deepesh_Katudia_Resume.pdf"; // Set the name for the downloaded file
-              link.click();
-              }}
-              >
-              Learn More
-            </Button>
+
+              <Button variant="outline" onClick={handleResumeDownload}>
+                Learn More
+              </Button>
             </span>
 
             <div
@@ -255,11 +375,10 @@ export default function Home() {
               <TriangleDownIcon className="mt-1 animate-bounce" />
             </div>
           </div>
+
           <div
-            data-scroll
-            data-scroll-speed="-.01"
             id={styles["canvas-container"]}
-            className="mt-14 h-full w-full xl:mt-0"
+            className="hero-canvas mt-14 h-full w-full xl:mt-0"
           >
             <Suspense fallback={<span>Loading...</span>}>
               <Spline scene="/assets/scene.splinecode" />
@@ -268,29 +387,34 @@ export default function Home() {
         </section>
 
         {/* About */}
-        <section id="about" data-scroll-section>
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="my-14 flex max-w-6xl flex-col justify-start space-y-10"
-          >
-            <h2 className="py-16  pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
+        <section id="about" ref={aboutRef}>
+          <div className="about-content my-14 flex max-w-6xl flex-col justify-start space-y-10">
+            <h2 className="py-16 pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
               I&apos;m an aspiring full-stack developer proficient in{" "}
               <Link
                 href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
                 target="_blank"
                 className="underline"
               >
-                JavaScript, Node.Js, Angular and React
+                JavaScript, Node.js, Angular and React
               </Link>{" "}
-              with experience building scalable web applications, APIs, and AI-enabled systems using JavaScript, React, Angular, and Node.js. I have worked as a Frontend Software Engineer Intern at Superstars and Y STEM and Chess Inc., where I built modular UIs and optimized client-side performance by up to 40%. My projects include TrueFeed, an AI-powered content credibility platform, an Online Resume-Based Job Platform, and SightScan, an assistive AI system achieving 95% accuracy and improving user mobility by 40%. I am AWS Certified Cloud Practitioner (CLF-C02) and passionate about building reliable, user-centric solutions.
+              with experience building scalable web applications, APIs, and
+              AI-enabled systems using JavaScript, React, Angular, and Node.js.
+              I have worked as a Frontend Software Engineer Intern at Superstars
+              and Y STEM and Chess Inc., where I built modular UIs and optimized
+              client-side performance by up to 40%. My projects include
+              TrueFeed, an AI-powered content credibility platform, an Online
+              Resume-Based Job Platform, and SightScan, an assistive AI system
+              achieving 95% accuracy and improving user mobility by 40%. I am
+              AWS Certified Cloud Practitioner (CLF-C02) and passionate about
+              building reliable, user-centric solutions.
             </h2>
+
             <div className="grid grid-cols-2 gap-8 xl:grid-cols-3">
               {aboutStats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col items-center text-center xl:items-start xl:text-start"
+                  className="about-stat flex flex-col items-center text-center xl:items-start xl:text-start"
                 >
                   <span className="clash-grotesk text-gradient text-4xl font-semibold tracking-tight xl:text-6xl">
                     {stat.value}
@@ -305,8 +429,7 @@ export default function Home() {
         </section>
 
         {/* Projects */}
-        <section id="projects" data-scroll-section>
-          {/* Gradient */}
+        <section id="projects" ref={projectsRef}>
           <div className="relative isolate -z-10">
             <div
               className="absolute inset-x-0 -top-40 transform-gpu overflow-hidden blur-[100px] sm:-top-80 lg:-top-60"
@@ -321,25 +444,30 @@ export default function Home() {
               />
             </div>
           </div>
-          <div data-scroll data-scroll-speed=".4" className="my-64">
-            <span className="text-gradient clash-grotesk text-sm font-semibold tracking-tighter">
-              ✨ Projects
-            </span>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight tracking-tighter xl:text-6xl">
-              Streamlined digital experiences.
-            </h2>
-            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;ve worked on a variety of projects, aim to convert small websites to
-              large-scale web applications. Here are some of my favorites:
-            </p>
 
-            {/* Carousel */}
+          <div className="my-64">
+            <div className="projects-heading">
+              <span className="text-gradient clash-grotesk text-sm font-semibold tracking-tighter">
+                ✨ Projects
+              </span>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight tracking-tighter xl:text-6xl">
+                Streamlined digital experiences.
+              </h2>
+              <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
+                I&apos;ve worked on a variety of projects, from small websites
+                to large-scale web applications. Here are some of my favorites:
+              </p>
+            </div>
+
             <div className="mt-14">
               <Carousel setApi={setCarouselApi} className="w-full">
                 <CarouselContent>
                   {projects.map((project) => (
                     <CarouselItem key={project.title} className="md:basis-1/2">
-                      <Card id="tilt">
+                      <Card
+                        data-tilt-card
+                        className="project-card overflow-hidden"
+                      >
                         <CardHeader className="p-0">
                           <Link href={project.href} target="_blank" passHref>
                             {project.image.endsWith(".webm") ? (
@@ -362,6 +490,7 @@ export default function Home() {
                             )}
                           </Link>
                         </CardHeader>
+
                         <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
                           <CardTitle className="border-t border-white/5 p-4 text-base font-normal tracking-tighter">
                             {project.description}
@@ -374,6 +503,7 @@ export default function Home() {
                 <CarouselPrevious />
                 <CarouselNext />
               </Carousel>
+
               <div className="py-2 text-center text-sm text-muted-foreground">
                 <span className="font-semibold">
                   {current} / {count}
@@ -384,65 +514,51 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services */}
-        <section id="services" data-scroll-section>
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="my-24 flex flex-col justify-start space-y-10"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 1,
-                staggerChildren: 0.5,
-              }}
-              viewport={{ once: true }}
-              className="grid items-center gap-1.5 md:grid-cols-2 xl:grid-cols-3"
-            >
-              <div className="flex flex-col py-6 xl:p-6">
-                <h2 className="text-4xl font-medium tracking-tight">
-                  Need more info?
-                  <br />
-                  <span className="text-gradient clash-grotesk tracking-normal">
-                    I got you.
-                  </span>
-                </h2>
-              </div>
-              {services.map((service) => (
-                <div
-                  key={service.service}
-                  className="flex flex-col items-start rounded-md bg-white/5 p-14 shadow-md backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-md"
-                >
-                  <service.icon className="my-6 text-primary" size={20} />
-                  <span className="text-lg tracking-tight text-foreground">
-                    {service.service}
-                  </span>
-                  <span className="mt-2 tracking-tighter text-muted-foreground">
-                    {service.description}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
+{/* Services */}
+<section id="services" ref={servicesRef}>
+  <div className="my-24 flex flex-col justify-start space-y-10">
+    <div className="services-heading mb-6">
+      <div className="flex flex-col py-6 xl:p-6">
+        <h2 className="text-4xl font-medium tracking-tight">
+          Need more info?
+          <br />
+          <span className="text-gradient clash-grotesk tracking-normal">
+            I got you.
+          </span>
+        </h2>
+      </div>
+    </div>
+
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {services.map((service) => (
+        <div
+          key={service.service}
+          className="service-card flex flex-col items-start rounded-md bg-white/5 p-10 shadow-md backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-md"
+        >
+          <service.icon className="my-6 text-primary" size={20} />
+          <span className="text-lg tracking-tight text-foreground">
+            {service.service}
+          </span>
+          <span className="mt-2 tracking-tighter text-muted-foreground">
+            {service.description}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {/* Contact */}
-        <section id="contact" data-scroll-section className="my-64">
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-primary/[6.5%] to-white/5 px-8 py-16 text-center xl:py-24"
-          >
+        <section id="contact" ref={contactRef} className="my-64">
+          <div className="contact-box flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-primary/[6.5%] to-white/5 px-8 py-16 text-center xl:py-24">
             <h2 className="text-4xl font-medium tracking-tighter xl:text-6xl">
               Let&apos;s work{" "}
               <span className="text-gradient clash-grotesk">together.</span>
             </h2>
             <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;m currently looking for full-time opportunities as a Software Engineer. If you have a project in mind or just want to say hi, feel free to reach out!
+              I&apos;m currently looking for full-time opportunities as a
+              Software Engineer. If you have a project in mind or just want to
+              say hi, feel free to reach out!
             </p>
             <Link href="mailto:dk72660n@pace.edu" passHref>
               <Button className="mt-6">Get in touch</Button>
@@ -457,7 +573,6 @@ export default function Home() {
 function Gradient() {
   return (
     <>
-      {/* Upper gradient */}
       <div className="absolute -top-40 right-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
         <svg
           className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
@@ -484,7 +599,6 @@ function Gradient() {
         </svg>
       </div>
 
-      {/* Lower gradient */}
       <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
